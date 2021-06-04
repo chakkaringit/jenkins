@@ -17,7 +17,7 @@ spec:
       - name: regcred
       containers:
       - name: sift-core-pipeline  
-        image: knowesis/sift-core:4.0.1-SCB
+        image: knowesis/IMAGE_NAME:IMAGE_TAG
         resources:
           requests:
             cpu: 100m

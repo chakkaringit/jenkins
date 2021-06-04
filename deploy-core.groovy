@@ -23,6 +23,15 @@ pipeline {
       }
     }
     
+    stage('read') {
+      steps {
+        script {
+          def data = readFile(file: 'values/deployment.yaml')
+            println(data)
+          }
+        }
+    }
+    
     stage('Deploy service to kubernetes') {
       steps{
          withKubeConfig([credentialsId: 'kubernate-cluster']) {

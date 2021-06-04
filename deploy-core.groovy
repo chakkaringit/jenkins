@@ -13,19 +13,6 @@ pipeline {
   
   stages {
     
-    stage('Pull docker image') {
-      steps{
-        script { 
-          docker.withTool('DockerCLI'){
-            docker.withRegistry('', 'dockerhub-credential') {
-              def image = docker.image('knowesis/sift-core:4.0.1-SCB')
-              image.pull()
-            }
-          }
-        }
-      }
-    }
-    
     stage('Check pods status') {
       steps{
          withKubeConfig([credentialsId: 'kubernate-cluster']) {

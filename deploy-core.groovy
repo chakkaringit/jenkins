@@ -25,4 +25,16 @@ pipeline {
     }
   }
   
+  post {
+    success {
+      echo '\033[0;32m *** Job SUCCESSFUL ***'
+    }
+    unstable {
+      echo '\033[0;33m *** Job UNSTABLE ***'
+    }
+    failure {
+      echo '\033[0;33m *** Job FAILURE ***'
+    }
+  }
+  
 }

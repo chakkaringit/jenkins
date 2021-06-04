@@ -17,7 +17,7 @@ pipeline {
       steps{
         script { 
           docker.withRegistry('https://hub.docker.com/', 'dockerhub-credential') {
-            def image = docker.image('${params.IMAGE_NAME}:${params.IMAGE_TAG}')
+            def image = docker.image('knowesis/sift-core:4.0.1-SCB')
             image.pull()
           }
         }

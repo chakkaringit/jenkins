@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sift-core-pipeline   
+spec:
+  serviceName: "sift-core-pipeline"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: siftcore-pipeline-master-pod
+  template:
+    metadata:
+      labels:
+        app: siftcore-pipeline-master-pod
+    spec:  
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: sift-core-pipeline  
+        image: knowesis/IMAGE_NAME:IMAGE_TAG
+        resources:
+          requests:
+            cpu: 100m
+            memory: 2048Mi
+          limits:
+            cpu: 100m
+            memory: 2048Mi
+        imagePullPolicy: IfNotPresent
+        env:      
+          - name: DS_NAME
+            value: "panda"
+          - name: PERSIST_ADDRESS
+            value: "http://sift-persist:8091/pools"
+          - name: CACHE_SIZE
+            value: "1000"
+          - name: LOG_LEVEL
+            value: "info"
+          - name: HEAP_SIZE
+            value: "2g"
+          - name: JVM_PARAM
+            value: "-XX:+UseConcMarkSweepGC"
+          - name: SEEK_TO_BEGINNING
+            value: "false"
+          - name: SLEEPTIME
+            value: "0"
+          - name: MAX_POLL_RECORDS
+            value: "200"
+          - name: ELASTICSEARCH_URL
+            value: "http://sift-es:9200"
+          - name: ELASTICSEARCH_SIFT_LOGS_INDEX
+            value: "pandalogs"
+          - name: CONTAINER_ID
+            value: "panda"
+          - name: ELASTICSEARCH_SIFT_FILREPORT_INDEX
+            value: "pandastats"
+          - name: ELASTICSEARCH_SIFT_BADRECORDS_INDEX
+            value: "siftbadrecords"
+          - name: PERSIST_CLIENT
+            value: "couchbase"
+          - name: PERSIST_PASSWORD
+            value: "None"
+          - name: APP_LOG_LEVEL
+            value: "INFO"
+          - name: LOG_TYPE
+            value: "file"
+          - name: NAMESPACE
+            value: "ns-volt-dev-v1"

@@ -1,8 +1,6 @@
-
-  node {
-  stage('Apply Kubernetes files') {
-    withKubeConfig([credentialsId: 'kubernate-cluster1', serverUrl: 'https://47.91.41.213:6443']) {
-      sh 'kubectl get nodes'
-    }
+pipeline {
+  stage('Deploy'){
+      kubernetesDeploy configs: 'values/deployment.yaml', 
+                       kubeconfigId: 'kubernate-cluster'
   }
 }

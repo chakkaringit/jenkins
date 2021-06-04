@@ -27,10 +27,10 @@ pipeline {
     stage('read') {
       steps {
         script {
-          def data = readFile(file: 'values/${valueFile}')
+          def data = readFile(file: "values/${valueFile}")
           def after = data.replaceAll("IMAGE_NAME","${params.IMAGE_NAME}").replaceAll("IMAGE_TAG","${params.IMAGE_TAG}")
           println(after)
-          writeFile(file: 'tmp/${valueFile}', text: after)
+          writeFile(file: "tmp/${valueFile}", text: after)
          }
       }
     }

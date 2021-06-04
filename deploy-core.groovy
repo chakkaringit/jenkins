@@ -28,8 +28,8 @@ pipeline {
         script {
           def data = readFile(file: 'values/deployment.yaml')
           def after = data.replaceAll("IMAGE_NAME","${params.IMAGE_NAME}").replaceAll("IMAGE_TAG","${params.IMAGE_TAG}")
-          println(data)
           println(after)
+          writeFile(file: 'tmp/deployment.yaml', text: after)
          }
       }
     }
@@ -37,7 +37,7 @@ pipeline {
     stage('Deploy service to kubernetes') {
       steps{
          withKubeConfig([credentialsId: 'kubernate-cluster']) {
-          sh 'cat values/deployment.yaml |  sed "s/IMAGE_NAME/${params.IMAGE_NAME}/g" | kubectl -n ns-volt-dev-v1 apply -f -'
+          sh './kubectl -n ns-volt-dev-v1 apply -f tmp/deployment.yaml'
         }
       }
     }

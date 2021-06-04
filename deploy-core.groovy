@@ -15,8 +15,8 @@ pipeline {
     
     stage('Pull docker image') {
       steps{
-        docker.withRegistry('https://private-registry-1', 'credentials-1') {
-        def image = docker.image('my-image:tag')
+        docker.withRegistry('https://hub.docker.com/', 'dockerhub-credential') {
+        def image = docker.image('${params.IMAGE_NAME}:${params.IMAGE_TAG}')
         image.pull()
         }
       }

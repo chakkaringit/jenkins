@@ -37,7 +37,7 @@ pipeline {
     stage('Deploy service to kubernetes') {
       steps{
          withKubeConfig([credentialsId: 'kubernate-cluster']) {
-          sh 'cat values/deployment.yaml |  sed 's/IMAGE_NAME/${params.IMAGE_NAME}/g' | ./kubectl -n ns-volt-dev-v1 apply -f -'
+          sh 'cat values/deployment.yaml |  sed "s/IMAGE_NAME/${params.IMAGE_NAME}/g" | ./kubectl -n ns-volt-dev-v1 apply -f -'
         }
       }
     }

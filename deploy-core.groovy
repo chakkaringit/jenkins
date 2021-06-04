@@ -27,9 +27,10 @@ pipeline {
       steps {
         script {
           def data = readFile(file: 'values/deployment.yaml')
-            println(data)
-          }
-        }
+          data.replaceAll("IMAGE_NAME","${params.IMAGE_NAME}").replaceAll("IMAGE_TAG","${params.IMAGE_TAG}")
+          println(data)
+         }
+      }
     }
     
     stage('Deploy service to kubernetes') {

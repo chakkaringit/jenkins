@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:  
+  name: siftportal  
+spec:  
+  replicas: 1  
+  selector: 
+    matchLabels: 
+      app: portal-master-pod  
+  template:  
+    metadata:  
+      labels:  
+        app: portal-master-pod  
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:  
+      - name: siftportal 
+        image: knowesis/sift-portal:4.0
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 2048Mi
+          limits:
+            cpu: 100m
+            memory: 5120Mi 
+        ports:  
+        - containerPort: 8080
+        - containerPort: 8090
+        - containerPort: 10080
+        env:
+           - name: TZ
+             value: "Australia/Sydney"

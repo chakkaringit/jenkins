@@ -6,6 +6,11 @@ pipeline {
     namespace = 'ns-volt-dev-v1'
   }
   
+  parameters {
+    string(name: 'SYSTEM', defaultValue: '', description: 'Enter array. Example:SYS-123')
+    string(name: 'EMail', defaultValue: '', description: 'Enter email id')
+ }
+  
   stages {
     stage('Check pods status') {
       steps{

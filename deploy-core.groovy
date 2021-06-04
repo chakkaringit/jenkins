@@ -16,9 +16,11 @@ pipeline {
     stage('Pull docker image') {
       steps{
         script { 
-          docker.withRegistry('', 'dockerhub-credential') {
-            def image = docker.image('knowesis/sift-core:4.0.1-SCB')
-            image.pull()
+          docker.withTool('DockerCLI')
+            docker.withRegistry('', 'dockerhub-credential') {
+              def image = docker.image('knowesis/sift-core:4.0.1-SCB')
+              image.pull()
+            }
           }
         }
       }

@@ -1,15 +1,9 @@
 pipeline {
-  agent {
-    kubernetes {
-      	cloud 'kubernetes'
-      }
+  node {
+  stage('Apply Kubernetes files') {
+    withKubeConfig([credentialsId: 'kubernate-cluster', serverUrl: 'https://47.91.41.213:6443']) {
+      sh 'kubectl get nodes'
     }
-  stages {
-    stage('Build') {
-      steps {  // no container directive is needed as the maven container is the default
-        sh "kubectl get nodes"   
-      }
-    }
-    
   }
+}
 }

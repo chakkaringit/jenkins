@@ -32,3 +32,22 @@ spec:
         env:
            - name: TZ
              value: "Australia/Sydney"
+             
+---
+apiVersion: v1  
+kind: Service  
+metadata:   
+  name: siftportal 
+  labels:   
+    app: portal-master-pod  
+spec:   
+  ports:  
+    - port: 8080 
+      name: web
+    - port: 8090 
+      name: sfapi
+    - port: 10080
+      name: ptapi
+  selector:   
+    app: portal-master-pod  
+  type: NodePort 

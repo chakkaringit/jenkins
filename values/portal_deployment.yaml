@@ -16,7 +16,7 @@ spec:
       - name: regcred
       containers:  
       - name: siftportal 
-        image: knowesis/sift-portal:4.0
+        image: knowesis/IMAGE_NAME:IMAGE_TAG
         imagePullPolicy: Always
         resources:
           requests:

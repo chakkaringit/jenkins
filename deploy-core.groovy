@@ -4,6 +4,7 @@ pipeline {
   
   environment {
     namespace = 'ns-volt-dev-v1'
+    valueFile = "siftcore_deployment.yaml"
   }
   
   parameters {
@@ -26,10 +27,10 @@ pipeline {
     stage('read') {
       steps {
         script {
-          def data = readFile(file: 'values/deployment.yaml')
+          def data = readFile(file: 'values/${valueFile}')
           def after = data.replaceAll("IMAGE_NAME","${params.IMAGE_NAME}").replaceAll("IMAGE_TAG","${params.IMAGE_TAG}")
           println(after)
-          writeFile(file: 'tmp/deployment.yaml', text: after)
+          writeFile(file: 'tmp/${valueFile}', text: after)
          }
       }
     }
@@ -37,7 +38,7 @@ pipeline {
     stage('Deploy service to kubernetes') {
       steps{
          withKubeConfig([credentialsId: 'kubernate-cluster']) {
-          sh './kubectl -n ns-volt-dev-v1 apply -f tmp/deployment.yaml'
+           sh './kubectl -n ${namespace} apply -f tmp/${valueFile}'
         }
       }
     }

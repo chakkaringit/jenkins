@@ -14,6 +14,16 @@ pipeline {
   
   stages {
     
+    stage('Install kubectl and Check Pod Status') {
+      steps{
+         withKubeConfig([credentialsId: 'kubernate-cluster']) {
+          sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+          sh 'chmod u+x ./kubectl'  
+           sh './kubectl -n ${namespace} get pods'
+        }
+      }
+    }
+    
     stage('Config Image version') {
       steps {
         script {

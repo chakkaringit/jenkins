@@ -7,11 +7,21 @@ pipeline {
   }
   
   parameters {
-    string(name: 'SYSTEM', defaultValue: '', description: 'Enter array. Example:SYS-123')
-    string(name: 'EMail', defaultValue: '', description: 'Enter email id')
+    string(name: 'IMAGE_NAME', defaultValue: '', description: 'Enter the image name')
+    string(name: 'IMAGE_TAG', defaultValue: '', description: 'Enter the image tag version')
  }
   
   stages {
+    
+    stage('Pull docker image') {
+      steps{
+        docker.withRegistry('https://private-registry-1', 'credentials-1') {
+        def image = docker.image('my-image:tag')
+        image.pull()
+        }
+      }
+    }
+    
     stage('Check pods status') {
       steps{
          withKubeConfig([credentialsId: 'kubernate-cluster']) {
@@ -21,6 +31,7 @@ pipeline {
         }
       }
     }
+    
     stage('Deploy service to kubernetes') {
       steps{
          withKubeConfig([credentialsId: 'kubernate-cluster']) {

@@ -27,8 +27,9 @@ pipeline {
       steps {
         script {
           def data = readFile(file: 'values/deployment.yaml')
-          data.replaceAll("IMAGE_NAME","${params.IMAGE_NAME}").replaceAll("IMAGE_TAG","${params.IMAGE_TAG}")
+          def after = data.replaceAll("IMAGE_NAME","${params.IMAGE_NAME}").replaceAll("IMAGE_TAG","${params.IMAGE_TAG}")
           println(data)
+          println(after)
          }
       }
     }

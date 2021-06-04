@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: sift-core-pipeline   
+  name: sift-core   
 spec:
-  serviceName: "sift-core-pipeline"
+  serviceName: "sift-core"
   replicas: 1
   selector:
     matchLabels:
-      app: siftcore-pipeline-master-pod
+      app: siftcore-master-pod
   template:
     metadata:
       labels:
-        app: siftcore-pipeline-master-pod
+        app: siftcore-master-pod
     spec:  
       imagePullSecrets:
       - name: regcred
       containers:
-      - name: sift-core-pipeline  
+      - name: sift-core  
         image: knowesis/IMAGE_NAME:IMAGE_TAG
         resources:
           requests:

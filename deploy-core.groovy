@@ -15,9 +15,11 @@ pipeline {
     
     stage('Pull docker image') {
       steps{
-        docker.withRegistry('https://hub.docker.com/', 'dockerhub-credential') {
-        def image = docker.image('${params.IMAGE_NAME}:${params.IMAGE_TAG}')
-        image.pull()
+        script { 
+          docker.withRegistry('https://hub.docker.com/', 'dockerhub-credential') {
+            def image = docker.image('${params.IMAGE_NAME}:${params.IMAGE_TAG}')
+            image.pull()
+          }
         }
       }
     }

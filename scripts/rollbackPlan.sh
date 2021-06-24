@@ -12,7 +12,7 @@ do
     if [ ${rollback} -eq 1 ]
     then
       statusMessage="with rollback version"
-    if
+    fi
     
     echo "Service is Running ${statusMessage}"
     break;

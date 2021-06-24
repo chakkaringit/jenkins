@@ -13,8 +13,6 @@ spec:
       labels:  
         app: email-alert-master-pod  
     spec:
-      nodeSelector:
-        role: apps
       imagePullSecrets:
       - name: regcred
       containers:  

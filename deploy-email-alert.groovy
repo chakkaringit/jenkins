@@ -46,6 +46,7 @@ pipeline {
     stage('Check status and Rollback plan') {
       steps {
          withKubeConfig([credentialsId: 'kubernate-cluster']) {
+           sh 'chmod 777 scripts/rollbackPlan.sh'  
            sh 'scripts/rollbackPlan.sh ${namespace}'
         }
       }

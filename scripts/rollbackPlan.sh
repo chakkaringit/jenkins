@@ -37,7 +37,7 @@ do
   then
     echo "Service is Not Running and Rollback not success!!!"
     break;
-  if
+  fi
   
   sleep 20
   runningCount=`expr ${runningCount} + 1`

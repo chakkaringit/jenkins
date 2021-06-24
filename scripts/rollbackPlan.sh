@@ -39,7 +39,7 @@ do
     break;
   fi
   
-  sleep 20
+  sleep 60
   runningCount=`expr ${runningCount} + 1`
   retryCount=`expr ${retryCount} + 1`
 done

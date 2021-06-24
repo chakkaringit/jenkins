@@ -4,6 +4,7 @@ pipeline {
   
   environment {
     namespace = 'ns-volt-dev-v1'
+    appName = 'email-alert-master-pod'
     valueFile = "email-alert_deployment.yaml"
   }
   
@@ -47,7 +48,7 @@ pipeline {
       steps {
          withKubeConfig([credentialsId: 'kubernate-cluster']) {
            sh 'chmod 777 scripts/rollbackPlan.sh'  
-           sh 'scripts/rollbackPlan.sh ${namespace}'
+           sh 'scripts/rollbackPlan.sh ${namespace} ${appName}'
         }
       }
    }

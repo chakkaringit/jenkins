@@ -53,8 +53,8 @@ pipeline {
           println(check)
         }
       }
-    }
-  
+   }
+ }
   post {
     success {
       echo '\033[0;32m *** Job SUCCESSFUL ***'

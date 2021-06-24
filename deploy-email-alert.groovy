@@ -42,9 +42,8 @@ pipeline {
         }
       }
     }
-  }
   
-  stage('Check status and Rollback plan') {
+    stage('Check status and Rollback plan') {
       steps {
         script {
           def check = (withKubeConfig([credentialsId: 'kubernate-cluster']) {

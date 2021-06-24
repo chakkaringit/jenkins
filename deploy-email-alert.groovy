@@ -45,11 +45,8 @@ pipeline {
   
     stage('Check status and Rollback plan') {
       steps {
-        script {
-          (withKubeConfig([credentialsId: 'kubernate-cluster']) {
-                def check = (sh './kubectl -n ${namespace} get pods -lapp=email-alert-master-pod')
-           })
-          println(check)
+         withKubeConfig([credentialsId: 'kubernate-cluster']) {
+           sh 'scripts/rollbackPlan.sh ${namespace}'
         }
       }
    }

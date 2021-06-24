@@ -13,6 +13,7 @@ do
   if [ "$status" != "Running" ] && [ ${runningCount} -ge 2 ]
   then
     echo "Need to rollback"
+    ./kubectl -n ${1} rollout history deployment ${3}
     break;
   fi
   

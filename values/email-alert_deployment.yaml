@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:  
+  name: email-alert
+spec:  
+  replicas: 1 
+  revisionHistoryLimit: 3 
+  selector: 
+    matchLabels: 
+      app: email-alert-master-pod  
+  template:  
+    metadata:  
+      labels:  
+        app: email-alert-master-pod  
+    spec:
+      nodeSelector:
+        role: apps
+      imagePullSecrets:
+      - name: regcred
+      containers:  
+      - name: email-alert
+        image: chakkarin/IMAGE_NAME:IMAGE_TAG
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 100m
+            memory: 512Mi 
+        ports:  
+        - containerPort: 8090
+        env:
+           - name: TZ
+             value: "Asia/Bangkok"
+           - name: ELASTICSEARCH_URL
+             value: "http://sift-es:9200"
+           - name: ELASTICSEARCH_SIFT_LOGS_INDEX
+             value: "email-alert"
+           - name: CONTAINER_ID
+             value: "EMAIL-ALERT"
+           - name: LOG_LEVEL
+             value: "info"
+           - name: HOST
+             value: "EMAIL-ALERT"
+           - name: SMTP_HOST
+             value: "waffle.scb.co.th"
+           - name: EMAIL_LIST
+             value: "chorpaka.ruangrak@scb.co.th"
+           - name: LOG_TYPE
+             value: "elastic"

@@ -42,8 +42,8 @@ spec:
            - name: HOST
              value: "EMAIL-ALERT"
            - name: SMTP_HOST
-             value: "waffle.scb.co.th"
+             value: ""
            - name: EMAIL_LIST
-             value: "chorpaka.ruangrak@scb.co.th"
+             value: ""
            - name: LOG_TYPE
              value: "elastic"

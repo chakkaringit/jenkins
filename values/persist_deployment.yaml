@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sift-persist
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: alicloud-disk-available
+  resources:
+    requests:
+      storage: 50Gi
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sift-persist
+spec:
+  serviceName: "sift-persist"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sift-persist-pod
+  template:
+    metadata:
+      labels:
+        app: sift-persist-pod
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: sift-persist
+        image: knowesis/persist:4.5.0-K8
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 350m
+            memory: 2048Mi
+          limits:
+            cpu: 350m
+            memory: 2048Mi
+        env:
+          - name: TYPE
+            value: "MASTER"
+        ports:
+        - containerPort: 8091
+        volumeMounts:
+        - mountPath: "/opt/couchbase/var"
+          name: volume
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: sift-persist
+          
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: sift-persist
+  labels: 
+    app: sift-persist
+spec: 
+  ports:
+    - port: 8091
+  selector: 
+    app: sift-persist-pod
+  type: NodePort
